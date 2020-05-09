@@ -2,6 +2,12 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('user', {
+    user_id: {
+      type: DataTypes.INTEGER(5).UNSIGNED,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
     username: {
       type: DataTypes.STRING(40),
       allowNull: false,
