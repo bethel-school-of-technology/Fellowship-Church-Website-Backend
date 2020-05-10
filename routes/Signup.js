@@ -4,7 +4,7 @@ var models = require('../models');
 
 
 router.post('/Signup', function (req, res, next) {
-    models.actor.findOrCreate({
+    models.users.findOrCreate({
       where: { 
         username: req.body.username, 
         email: req.body.email 
@@ -12,7 +12,7 @@ router.post('/Signup', function (req, res, next) {
     })
     .spread(function(result, created) {
       if (created) {
-        res.redirect('/Signup' + result.user_id);  //<---This needs to redirect to an account page of some sort
+        res.redirect('/users/account' + result.user_id);  //<---This needs to redirect to an account page of some sort
       } else {
         res.status(400);
         res.send('User already exists');
