@@ -1,46 +1,80 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var models = require('./models');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const logger = require('morgan'); 
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const passport = require('passport');
+const helmet = require('helmet');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const app = express();
 
-var app = express();
+const API_PORT = process.env.API_PORT || 3000;
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+const swaggerDefinition = {
+  info: {
+    title: 'MySQL Registration Swagger API',
+    version: '1.0.0',
+    description: 'Endpoints to test the user registration routes',
+  },
+  host: 'localhost:3003',
+  basePath: '/',
+  securityDefinitions: {
+    bearerAuth: {
+      type: 'apiKey',
+      name: 'Authorization',
+      scheme: 'bearer',
+      in: 'header',
+    },
+  },
+};
 
+const options = {
+  swaggerDefinition,
+  apis: ['./routes/*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+app.get('/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
+require('./config/passport');
+
+const whitelist = [
+  'http://localhost:3031',
+  'http://localhost:3000',
+  'http://localhost:3003',
+];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(Cors(corsOptions));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(helmet());
+app.use(passport.initialize());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+require('./routes/forgotPassword')(app);
+require('./routes/resetPassword')(app);
+require('./routes/updatePassword')(app);
+require('./routes/updatePasswordViaEmail')(app);
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-models.sequelize.sync().then(function () {
-  console.log("DB Sync'd up")
-});
+// eslint-disable-next-line no-console
+app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
 
 module.exports = app;
