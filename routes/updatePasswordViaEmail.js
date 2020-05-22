@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
-import Sequelize from 'sequelize';
-import User from '../sequelize';
+const bcrypt = require('bcrypt');
+const Sequelize = require('sequelize');
+const User = require('../sequelize');
 
 
 const Op = Sequelize.Op;

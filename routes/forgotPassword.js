@@ -1,5 +1,5 @@
-import crypto from 'crypto';
-import User from '../sequelize';
+const crypto = require('crypto');
+const User = require('../sequelize');
 
 require('dotenv').config();
 
@@ -39,10 +39,10 @@ module.exports = (app) => {
           to: `${user.email}`,
           subject: 'Link To Reset Password',
           text:
-            'Hello. You are receiving this message because you have requested the reset of the password to your account.\n\n'
+            'Howdy! You are receiving this message because you requested the reset of the password to your account.\n\n'
             + 'Please click on the following link, or paste into your browser. The link is good for one hour after receiving it:\n\n'
             + `http://localhost:3000/reset/${token}\n\n`
-            + 'If you did not make this request, please disregard.\n',
+            + 'If you did not make this request, no action is required.\n',
         };
 
         console.log('sending mail');

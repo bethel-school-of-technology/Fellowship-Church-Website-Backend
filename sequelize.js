@@ -1,7 +1,8 @@
-import Sequelize from 'sequelize';
-import UserModel from './models/user';
+const Sequelize = require('sequelize');
+const UserModel = require('./models/user');
 
-const sequelize = new Sequelize('users', 'test', 'test1234', {
+
+const sequelize = new Sequelize('user', 'test', 'test1234', {
   host: 'db',
   dialect: 'mysql',
 });

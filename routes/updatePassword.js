@@ -1,6 +1,6 @@
-import passport from 'passport';
-import bcrypt from 'bcrypt';
-import User from '../sequelize';
+const passport = require('passport');
+const bcrypt = require('bcrypt');
+const User = ('../sequelize');
 
 const BCRYPT_SALT_ROUNDS = 12;
 module.exports = (app) => {

@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import User from '../sequelize';
+const Sequelize = require('sequelize');
+const User = require('../sequelize');
 
 const Op = Sequelize.Op;
 
