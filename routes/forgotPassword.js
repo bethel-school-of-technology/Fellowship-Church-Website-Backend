@@ -41,7 +41,7 @@ module.exports = (app) => {
           text:
             'Howdy! You are receiving this message because you requested the reset of the password to your account.\n\n'
             + 'Please click on the following link, or paste into your browser. The link is good for one hour after receiving it:\n\n'
-            + `http://localhost:3000/reset/${token}\n\n`
+            + `http://localhost:3003/reset/${token}\n\n`
             + 'If you did not make this request, no action is required.\n',
         };
 
