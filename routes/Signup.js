@@ -2,9 +2,12 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
+router.get('/', function(req, res, next) {
+  res.send('HAHA you did it!');
+});
 
-router.post('/Signup', function (req, res, next) {
-    models.users.findOrCreate({
+router.post('/', function (req, res, next) {
+    models.newuser.findOrCreate({
       where: { 
         username: req.body.username, 
         email: req.body.email 
@@ -12,7 +15,7 @@ router.post('/Signup', function (req, res, next) {
     })
     .spread(function(result, created) {
       if (created) {
-        res.redirect('/users/account' + result.user_id);  //<---This needs to redirect to an account page of some sort
+        res.redirect('/' + result.user_id);  //<---This needs to redirect to an account page of some sort
       } else {
         res.status(400);
         res.send('User already exists');
