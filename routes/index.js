@@ -1,21 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const mysql = require('mysql');
 
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Password1!',
-  database: 'users'
-});
-
-connection.connect(function(err) {
-  if (err) {
-    console.error(err.message);
-    return;
-  }
-  console.log('Yay! You are connected to the database!');
-})
 
 router.get('/person/:id', function(req, res, next) {
   //get object that matches the id
