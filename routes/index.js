@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const mysql = require('mysql2');
+const models = require('../models');
 
 // var connection = mysql.createConnection({
 //   host: 'localhost',
 //   user: 'root',
 //   password: 'Password1!',
-//   database: 'user'
+//   database: 'sakila'
 // });
 
 // connection.connect(function(err) {
@@ -31,9 +32,17 @@ router.get('/', function(req, res) {
   res.send('You successfully created a POST route!');
 });
 
-router.post('/', function(req, res) {
-  res.send('You successfully created a POST route!');
-});
+// router.post('/', function (req, res, next) {
+//   models.newuser.create(req.body)
+//     .then(newUserAccount => {
+//       res.setHeader('Content-Type', 'application/json');
+//       res.send(JSON.stringify(newUserAccount));
+//     })
+//     .catch(err => {
+//       res.status(400);
+//       res.send(err.message);
+//     });
+// });
 
 router.put('/', function(req, res) {
   res.send('You successfully created a PUT route!');

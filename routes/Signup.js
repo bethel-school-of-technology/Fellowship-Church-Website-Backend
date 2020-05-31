@@ -7,20 +7,25 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    models.newuser.findOrCreate({
-      where: { 
-        username: req.body.username, 
-        email: req.body.email 
-      }
-    })
-    .spread(function(result, created) {
-      if (created) {
-        res.redirect('/' + result.user_id);  //<---This needs to redirect to an account page of some sort
-      } else {
-        res.status(400);
-        res.send('User already exists');
-      }
-    })
+  models.newUsers
+  .findOrCreate({
+  where: {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    username: req.body.username,
+    password: req.body.password,
+    email: req.body.email,
+  }
+  }).spread(function (result, created) {
+  if (created) {
+  console.log('User Successfully Created!');
+  } else {
+  res.send('User Name Does Not Meet The Requirements!');
+  }
   });
+  })
 
 module.exports = router;
+
+
+// authService.hashPassword(req.body.password)
