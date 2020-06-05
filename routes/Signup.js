@@ -25,7 +25,7 @@ router.post('/', function (req, res, next) {
   res.send('User Name Does Not Meet The Requirements!');
   }
   });
-  })
+})
 
 module.exports = router;
 
