@@ -23,7 +23,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/chat_index', ioRouter);
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
