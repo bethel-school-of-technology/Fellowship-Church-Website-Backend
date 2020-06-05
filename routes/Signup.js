@@ -7,14 +7,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-  models.newUsers
+  models.users
   .findOrCreate({
   where: {
+    username: req.body.username,
+    email: req.body.email,
+  },
+  defaults: {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email,
+    password: req.body.password.authService.hashPassword(req.body.password),
   }
   }).spread(function (result, created) {
   if (created) {
@@ -28,4 +30,3 @@ router.post('/', function (req, res, next) {
 module.exports = router;
 
 
-// authService.hashPassword(req.body.password)
