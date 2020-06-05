@@ -33,6 +33,28 @@ router.post('/login', function (req, res, next) {
     });
   });
 
+  router.post('/', function (req, res, next) {
+    models.users
+    .findOrCreate({
+    where: {
+      Username: req.body.username,
+      Email: req.body.email,
+    },
+    defaults: {
+      FirstName: req.body.firstName,
+      LastName: req.body.lastName,
+      Password: authService.hashPassword(req.body.password),
+    }
+    }).spread(function (result, created) {
+    if (created) {
+    res.json('User Successfully Created!');
+
+    } else {
+    res.send('User Name Does Not Meet The Requirements!');
+    }
+    });
+  })
+
 router.get('/profile', function (req, res, next) {
     let token = req.cookies.jwt;
     if (token) {
