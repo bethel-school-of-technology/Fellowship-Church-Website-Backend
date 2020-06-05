@@ -8,29 +8,6 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
-// Create new user if one doesn't exist
-router.post('/signup', function(req, res, next) {
-  models.users
-    .findOrCreate({
-      where: {
-        Username: req.body.username
-      },
-      defaults: {
-        FirstName: req.body.firstName,
-        LastName: req.body.lastName,
-        Email: req.body.email,
-        Password: authService.hashPassword(req.body.password)
-      }
-    })
-    .spread(function(result, created) {
-      if (created) {
-        res.send('User successfully created');
-      } else {
-        res.send('This user already exists');
-      }
-    });
-});
-
 router.post('/login', function (req, res, next) {
     models.users.findOne({
       where: {

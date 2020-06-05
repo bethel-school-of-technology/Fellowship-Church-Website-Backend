@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-  models.newUsers
+  models.users
   .findOrCreate({
   where: {
     firstName: req.body.firstName,
