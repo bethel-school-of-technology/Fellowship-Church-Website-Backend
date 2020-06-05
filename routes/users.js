@@ -25,6 +25,7 @@ router.post('/login', function (req, res, next) {
           let token = authService.signUser(user);
           res.cookie('jwt', token);
           res.send('Login successful');
+          res.redirect('/home');
         } else {
           console.log('Wrong password');
           res.send('Wrong password');
@@ -33,7 +34,7 @@ router.post('/login', function (req, res, next) {
     });
   });
 
-  router.post('/', function (req, res, next) {
+  router.post('/signup', function (req, res, next) {
     models.users
     .findOrCreate({
     where: {
