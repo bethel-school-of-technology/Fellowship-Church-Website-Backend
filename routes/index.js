@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 const mysql = require('mysql2');
@@ -17,6 +18,12 @@ const models = require('../models');
 //   }
 //   console.log('Yay! You are connected to the database!');
 // })
+
+
+const express = require('express');
+const router = express.Router();
+const mysql = require('mysql');
+
 
 
 router.get('/person/:id', function(req, res, next) {
